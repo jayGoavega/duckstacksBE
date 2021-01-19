@@ -3,6 +3,7 @@ const { thinky } = require("../config/thinky");
 const r = thinky.r;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 /**
  * @DESC TO REGISTER USERS(ADMIN,SPONSORS,SITES,CONSULTANTS)
  */
@@ -54,6 +55,7 @@ const validateEmail = async (email) => {
 
 exports.userLogin = async (userData, role, res) => {
   const { email, password } = await userData;
+
   const check = await userModel.filter({ email });
   //checking email exit or not
   if (check.length == 0) {
@@ -64,7 +66,7 @@ exports.userLogin = async (userData, role, res) => {
   }
   const person = await check[0];
   //checking role
-  if (person.role !== role) {
+  if (!role.includes(person.role)) {
     return res.status(401).json({
       message: `you are not ${role}`,
       success: false,
@@ -87,6 +89,7 @@ exports.userLogin = async (userData, role, res) => {
       ...person,
       token: `Bearer ${token}`,
     };
+    res.cookie("token", token);
     return res.status(200).json({
       message: `successfully logged as ${role}`,
       success: true,
