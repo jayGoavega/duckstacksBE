@@ -57,20 +57,12 @@ router.post("/login-common", async (req, res) => {
 
 // *******************************************
 
-//getting all admin role
+//getting all admin role - access admin
 router.get("/get-admin", checkAuth, checkRole(["admin"]), async (req, res) => {
   await getSingleRole("admin", res);
 });
 
-router.get(
-  "/get-doctor-only",
-  checkAuth,
-  checkRole(["doctor"]),
-  async (req, res) => {
-    await getSingleRole("doctor", res);
-  }
-);
-//getting all sponsor role
+//getting all sponsor role - access admin and sponsor
 router.get(
   "/get-sponsor",
   checkAuth,
@@ -79,7 +71,7 @@ router.get(
     await getSingleRole("sponsor", res);
   }
 );
-//getting all doctor role
+//getting all doctor role - access admin and sponsor
 router.get(
   "/get-doctor",
   checkAuth,
@@ -88,7 +80,7 @@ router.get(
     await getSingleRole("doctor", res);
   }
 );
-//getting all consultant role
+//getting all consultant role - access admin and sponsor
 router.get(
   "/get-consultant",
   checkAuth,
@@ -100,7 +92,7 @@ router.get(
 
 // *********************************************
 
-//use for all authentication
+//any user can access and get their profile - access all
 router.post(
   "/allprofile",
   checkAuth,
@@ -110,24 +102,24 @@ router.post(
   }
 );
 
-//getAllUserList - for admin
+// *********************************************
+
+//getAllUserList
 router.get("/get-all-users", checkAuth, async (req, res) => {
   await getAllUsers(res);
 });
 
-//getUsersCreated by sponsor
-// router.get("/get-sponsor-created-users", checkAuth, async (req, res) => {
+// *********************************************
 
-// });
 
 //admin procted route
-router.post("/admin-protected", checkAuth, checkRole(["admin"]), (req, res) => {
+router.get("/admin-profile", checkAuth, checkRole(["admin"]), (req, res) => {
   res.json(serializeUser(req.user));
 });
 
 //sponsor procted route
-router.post(
-  "/sponsor-protected",
+router.get(
+  "/sponsor-profile",
   checkAuth,
   checkRole(["sponsor"]),
   (req, res) => {
@@ -136,18 +128,13 @@ router.post(
 );
 
 //doctor procted route
-router.post(
-  "/doctor-protected",
-  checkAuth,
-  checkRole(["doctor"]),
-  (req, res) => {
-    res.json(serializeUser(req.user));
-  }
-);
+router.get("/doctor-profile", checkAuth, checkRole(["doctor"]), (req, res) => {
+  res.json(serializeUser(req.user));
+});
 
 //consultant procted route
-router.post(
-  "/consultant-protected",
+router.get(
+  "/consultant-profile",
   checkAuth,
   checkRole(["consultant"]),
   (req, res) => {

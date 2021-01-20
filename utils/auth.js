@@ -60,7 +60,7 @@ exports.userLogin = async (userData, role, res) => {
   //checking email exit or not
   if (check.length == 0) {
     return res.status(404).json({
-      message: "no email found",
+      message: "Email not found!",
       success: false,
     });
   }
@@ -97,7 +97,7 @@ exports.userLogin = async (userData, role, res) => {
     });
   } else {
     return res.status(401).json({
-      message: `Incorrect Password for ${role}`,
+      message: `Incorrect Password`,
       success: false,
     });
   }
