@@ -6,7 +6,11 @@ const {
   serializeUser,
   checkRole,
 } = require("../middleware/checkUser");
-const { getAllUsers, getSingleRole } = require("../controllers/user");
+const {
+  getAllUsers,
+  getSingleRole,
+  getSponsorCreated,
+} = require("../controllers/user");
 
 // *******************************************
 
@@ -111,7 +115,6 @@ router.get("/get-all-users", checkAuth, async (req, res) => {
 
 // *********************************************
 
-
 //admin procted route
 router.get("/admin-profile", checkAuth, checkRole(["admin"]), (req, res) => {
   res.json(serializeUser(req.user));
@@ -139,6 +142,36 @@ router.get(
   checkRole(["consultant"]),
   (req, res) => {
     res.json(serializeUser(req.user));
+  }
+);
+
+//get-sponsor-created-sponsor
+router.get(
+  "/sponsor-created-sponsor",
+  checkAuth,
+  checkRole(["sponsor"]),
+  (req, res) => {
+    getSponsorCreated("sponsor", res);
+  }
+);
+
+//get-sponsor-created-doctor
+router.get(
+  "/sponsor-created-doctor",
+  checkAuth,
+  checkRole(["sponsor"]),
+  (req, res) => {
+    getSponsorCreated("doctor", res);
+  }
+);
+
+//get-sponsor-created-consultant
+router.get(
+  "/sponsor-created-consultant",
+  checkAuth,
+  checkRole(["sponsor"]),
+  (req, res) => {
+    getSponsorCreated("consultant", res);
   }
 );
 
