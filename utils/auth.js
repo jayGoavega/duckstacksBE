@@ -89,7 +89,6 @@ exports.userLogin = async (userData, role, res) => {
       ...person,
       token: `Bearer ${token}`,
     };
-    res.cookie("token", token);
     return res.status(200).json({
       message: `successfully logged as ${role}`,
       success: true,

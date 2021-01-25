@@ -151,7 +151,7 @@ router.get(
   checkAuth,
   checkRole(["sponsor"]),
   (req, res) => {
-    getSponsorCreated("sponsor", res);
+    getSponsorCreated("sponsor",req,res);
   }
 );
 
@@ -161,7 +161,7 @@ router.get(
   checkAuth,
   checkRole(["sponsor"]),
   (req, res) => {
-    getSponsorCreated("doctor", res);
+    getSponsorCreated("doctor",req, res);
   }
 );
 
@@ -171,7 +171,7 @@ router.get(
   checkAuth,
   checkRole(["sponsor"]),
   (req, res) => {
-    getSponsorCreated("consultant", res);
+    getSponsorCreated("consultant",req, res);
   }
 );
 

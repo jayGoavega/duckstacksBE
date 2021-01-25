@@ -15,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 passportFun(passport);
+
+//authRouter
 app.use("/api/users", userRouter);
 
 //server listen 

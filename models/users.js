@@ -14,7 +14,7 @@ const userSchema = thinky.createModel("user", {
     .default("admin"),
   email: type.string().email().required(),
   password: type.string().min(6).required(),
-  createdBy: type.string(),
+  createdBy: type.object(),
   createdAt: type.date().default(r.now()),
 });
 
